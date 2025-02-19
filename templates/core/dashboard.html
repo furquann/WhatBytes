@@ -1,0 +1,52 @@
+{% extends "core/base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4">
+    <!-- Dashboard Header -->
+    <div class="flex flex-col items-center justify-center mb-8">
+        <h1 class="text-5xl pb-6 font-black text-white tracking-widest mb-4">DASHBOARD</h1>
+        <p class="text-xl text-white/90">Hi, {{ user.username | capfirst }}!</p>
+    </div>
+
+    <!-- Navigation Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Profile Card -->
+        <a href="{% url 'profile' %}" class="bg-white rounded-xl shadow-lg p-6 hover:bg-purple-50 transition-colors duration-300 group">
+            <div class="flex items-center">
+                <i class="fas fa-user text-purple-600 text-2xl mr-4 group-hover:transform group-hover:scale-110 transition-transform"></i>
+                <div>
+                    <h2 class="text-lg font-medium text-gray-800">Profile</h2>
+                    <p class="text-sm text-gray-600">View and manage your profile</p>
+                </div>
+            </div>
+        </a>
+
+        <!-- Change Password Card -->
+        <a href="{% url 'change_password' %}" class="bg-white rounded-xl shadow-lg p-6 hover:bg-purple-50 transition-colors duration-300 group">
+            <div class="flex items-center">
+                <i class="fas fa-key text-purple-600 text-2xl mr-4 group-hover:transform group-hover:scale-110 transition-transform"></i>
+                <div>
+                    <h2 class="text-lg font-medium text-gray-800">Change Password</h2>
+                    <p class="text-sm text-gray-600">Update your password</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Logout Button -->
+    <div class="mt-8 text-center">
+        <form method="POST" action="{% url 'logout' %}" class="inline-block">
+            {% csrf_token %}
+            <button type="submit" class="bg-white px-6 py-3 rounded-lg hover:bg-purple-50 transition-colors duration-300 shadow-md group">
+                <i class="fas fa-sign-out-alt text-purple-600 mr-2 group-hover:transform group-hover:-rotate-12 transition-transform"></i>
+                <span class="text-purple-600 font-medium">Logout</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
+{% endblock %}

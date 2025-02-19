@@ -1,0 +1,75 @@
+<!-- profile.html -->
+{% extends "core/base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4">
+    <!-- Header with Navigation -->
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-4xl font-bold text-white">Profile</h1>
+        <div class="flex items-center space-x-4">
+            <a href="{% url 'dashboard' %}" class="flex items-center bg-white/90 px-4 py-2 rounded-lg hover:bg-white transition-colors duration-300">
+                <i class="fas fa-arrow-left text-purple-600 mr-2"></i>
+                <span class="text-purple-600 font-medium">Back to Dashboard</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Profile Card -->
+    <div class="bg-white rounded-xl shadow-lg p-6">
+        <div class="space-y-6">
+            <!-- Username -->
+            <div class="flex items-center p-4 bg-purple-50 rounded-lg">
+                <i class="fas fa-user text-purple-600 text-xl mr-4"></i>
+                <div>
+                    <p class="text-sm text-gray-600">Username</p>
+                    <p class="font-medium text-gray-800">{{ user.username }}</p>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="flex items-center p-4 bg-purple-50 rounded-lg">
+                <i class="fas fa-envelope text-purple-600 text-xl mr-4"></i>
+                <div>
+                    <p class="text-sm text-gray-600">Email</p>
+                    <p class="font-medium text-gray-800">{{ user.email }}</p>
+                </div>
+            </div>
+
+            <!-- Date Joined -->
+            <div class="flex items-center p-4 bg-purple-50 rounded-lg">
+                <i class="fas fa-calendar text-purple-600 text-xl mr-4"></i>
+                <div>
+                    <p class="text-sm text-gray-600">Date Joined</p>
+                    <p class="font-medium text-gray-800">{{ user.date_joined|date:"F d, Y" }}</p>
+                </div>
+            </div>
+
+            <!-- Last Updated -->
+            <div class="flex items-center p-4 bg-purple-50 rounded-lg">
+                <i class="fas fa-clock text-purple-600 text-xl mr-4"></i>
+                <div>
+                    <p class="text-sm text-gray-600">Last Updated</p>
+                    <p class="font-medium text-gray-800">{{ user.last_login|date:"F d, Y H:i" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Button -->
+    <div class="mt-8 text-center">
+        <form method="POST" action="{% url 'logout' %}" class="inline-block">
+            {% csrf_token %}
+            <button type="submit" class="bg-white px-6 py-3 rounded-lg hover:bg-purple-50 transition-colors duration-300 shadow-md group">
+                <i class="fas fa-sign-out-alt text-purple-600 mr-2 group-hover:transform group-hover:-rotate-12 transition-transform"></i>
+                <span class="text-purple-600 font-medium">Logout</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
+{% endblock %}
