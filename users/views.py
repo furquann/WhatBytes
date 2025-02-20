@@ -123,53 +123,6 @@ def password_reset_sent(request, reset_id):
         return redirect('forgot_password')
 
 
-
-# def reset_password(request):
-#     try:
-#         reset_id = PasswordReset.objects.get(reset_id=reset_id)
-
-#         if request.method == 'POST':
-
-#             password = request.POST.get('password')
-#             confirm_password = request.POST.get('confirm_password')
-
-#             passwords_have_error = False
-
-#             if password != confirm_password:
-#                 passwords_have_error = True
-#                 messages.error(request, 'Passwords do not match')
-            
-#             is_strong_password = is_strong_password(password)
-
-#             if not is_strong_password:
-#                 passwords_have_error = True
-#                 messages.error(request, "Make sure you keep a strong password. It must be atleast 8 characters long and with atleast one capital letter and a symbol")
-
-#             expiration_time = reset_id.created_when + timezone.timedelta(minutes=10)
-
-#             if timezone.now() > expiration_time:
-#                 passwords_have_error = True
-#                 messages.error(request, 'Reset link has expired')
-
-#             # reset password
-#             if not passwords_have_error:
-#                 user = reset_id.user
-#                 user.set_password(password)
-#                 user.save()
-                
-#                 # delete reset id after use
-#                 reset_id.delete()
-
-#                 # redirect to login
-#                 messages.success(request, 'Password reset. Proceed to login')
-#                 return redirect('login')
-
-#     except PasswordReset.DoesNotExist:
-#         messages.error(request, 'Invalid reset id')
-#         return redirect('forgot_password')
-    
-#     return render(request, 'users/reset_password.html')
-
 def reset_password(request, reset_id):
 
     try:
@@ -185,9 +138,9 @@ def reset_password(request, reset_id):
                 passwords_have_error = True
                 messages.error(request, 'Passwords do not match')
 
-            if len(password) < 5:
-                passwords_have_error = True
-                messages.error(request, 'Password must be at least 5 characters long')
+            if not is_strong_password(password):
+            passwords_have_error = True
+            messages.error(request, "Make sure you use a strong password. It must be at least 8 characters long, with at least one capital letter and a symbol.")
 
             expiration_time = password_reset_id.created_when + timezone.timedelta(minutes=10)
 
